@@ -17,11 +17,8 @@ depends_on = ${repr(depends_on)}
 
 
 def upgrade():
-    conn = op.get_bind()
-    inspector = sa.engine.reflection.Inspector.from_engine(conn)
-    if 'movie_id' not in [col['name'] for col in inspector.get_columns('ratings')]:
-        op.add_column('ratings', sa.Column('movie_id', sa.Integer, sa.ForeignKey('movies.id')))
+    ${upgrades if upgrades else "pass"}
 
 
 def downgrade():
-    op.drop_column('ratings', 'movie_id')
+    ${downgrades if downgrades else "pass"}

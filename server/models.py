@@ -30,7 +30,9 @@ class User(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
+    _password_hash = db.Column(db.String)
     age = db.Column(db.Integer)
+    image_url = db.Column(db.String)
 
     ratings = db.relationship('Rating', backref='user_ref', cascade="all, delete-orphan")
     comments = db.relationship('Comment', backref='user_comments', cascade="all, delete-orphan")
