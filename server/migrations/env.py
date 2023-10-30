@@ -1,7 +1,5 @@
 import logging
 from logging.config import fileConfig
-from alembic import op
-import sqlalchemy as sa
 
 from flask import current_app
 
@@ -15,15 +13,6 @@ config = context.config
 # This line sets up loggers basically.
 fileConfig(config.config_file_name)
 logger = logging.getLogger('alembic.env')
-
-def upgrade():
-    conn = op.get_bind()
-    inspector = sa.engine.reflection.Inspector.from_engine(conn)
-    if 'movie_id' not in [col['name'] for col in inspector.get_columns('ratings')]:
-        op.add_column('ratings', sa.Column('movie_id', sa.Integer, sa.ForeignKey('movies.id')))
-
-def downgrade():
-    op.drop_column('ratings', 'movie_id')
 
 
 def get_engine():

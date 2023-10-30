@@ -12,7 +12,7 @@ import os
 from flask_bcrypt import Bcrypt
 from faker import Faker
 import tmdbsimple as tmdb
-from models import Movie
+from models import db, User, Movie, Rating, Comment, MovieList, Log
 
 tmdb.API_KEY = 'c9ec267ab1d062779039d92435621a6b'
 
@@ -68,10 +68,130 @@ def get_data():
     
 class Movies(Resource):
     def get(self):
-        movies = [movie.to_dict() for movie in Movies.query.all()]
+        movies = [movie.to_dict() for movie in Movie.query.all()]
         return make_response(movies, 200)
 
-api.add_resource(Movies, "/movies")  
+api.add_resource(Movies, "/movies")
+
+class Users(Resource):
+    def get(self):
+        users = [user.to_dict() for user in User.query.all()]
+        return make_response(users, 200)
+
+    
+    def post(self):
+        try:
+            new_user = User(
+                username = request.json['username'],
+                password = request.json['password'],
+                age = request.json['age']
+                )
+            db.session.add(new_user)
+            db.session.commit()
+            return make_response(new_user.to_dict(), 201 )
+        except ValueError:
+            return make_response({"errors":["validation errors"]}, 400)
+api.add_resource(Users, '/users')
+
+class UsersById(Resource):
+    def get(self, id):
+        user = User.query.filter_by(id = id).first()
+        if not user:
+            return make_response({"error": ["User not found"]}, 404)
+        user_to_dict = user.to_dict()
+        return make_response(user_to_dict, 200)
+
+    def patch(self, id):
+        user = User.query.filter_by(id = id).first()
+        if not user:
+            return make_response({"error": ["User not found"]}, 404)
+        try:
+            for attr in request.json: 
+                setattr(user, attr, request.json[attr])
+            db.session.add(user)
+            db.session.commit()
+            user_to_dict = user.to_dict()
+            return make_response(user_to_dict, 202)
+        except ValueError:
+            return make_response({"errors":["validation errors"]}, 400)
+
+    def delete(self,id):
+        user = User.query.filter_by(id = id).first()
+        if not user:
+            return make_response({"error": ["User not found"]}, 404)
+        db.session.delete(user)
+        db.session.commit()
+        return make_response({}, 204)
+api.add_resource(UsersById, '/users/<int:id>')
+
+# Create a resource for the Movie model
+class MovieById(Resource):
+    def get(self, movie_id):
+        movie = Movie.query.get(movie_id)
+        if movie:
+            return movie.to_dict()
+        else:
+            return {'message': 'Movie not found'}, 404
+
+api.add_resource(MovieById, '/movies/<int:movie_id>')
+
+# Create a resource for the Rating model
+class RatingById(Resource):
+    def get(self, rating_id):
+        rating = Rating.query.get(rating_id)
+        if rating:
+            return rating.to_dict()
+        else:
+            return {'message': 'Rating not found'}, 404
+
+api.add_resource(RatingById, '/ratings/<int:rating_id>')
+
+class Ratings(Resource):
+    def get(self):
+        ratings = [rating.to_dict() for rating in Rating.query.all()]
+        return make_response(ratings, 200)
+
+api.add_resource(Ratings, '/ratings')
+
+# Create a resource for the Comment model
+class CommentResource(Resource):
+    def get(self, comment_id):
+        comment = Comment.query.get(comment_id)
+        if comment:
+            return comment.to_dict()
+        else:
+            return {'message': 'Comment not found'}, 404
+
+api.add_resource(CommentResource, '/comments/<int:comment_id>')
+
+# Create a resource for the MovieList model
+class MovieListResource(Resource):
+    def get(self, list_id):
+        movie_list = MovieList.query.get(list_id)
+        if movie_list:
+            return movie_list.to_dict()
+        else:
+            return {'message': 'Movie List not found'}, 404
+
+api.add_resource(MovieListResource, '/lists/<int:list_id>')
+
+# Create a resource for the Log model
+class Logs(Resource):
+    def get(self):
+        logs = [log.to_dict() for log in Log.query.all()]
+        return make_response(logs, 200)
+
+api.add_resource(RatingResource, '/logs')
+
+class LogById(Resource):
+    def get(self, log_id):
+        log = Log.query.get(log_id)
+        if log:
+            return log.to_dict()
+        else:
+            return {'message': 'Log not found'}, 404
+
+api.add_resource(LogById, '/logs/<int:log_id>')
 
 if __name__ == '__main__':
     # Run the Flask app on port 5555
