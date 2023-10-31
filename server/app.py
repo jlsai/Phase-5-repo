@@ -4,13 +4,13 @@
 
 # Remote library imports
 from config import db
+from flask import Flask
+from flask_cors import CORS
 from flask_restful import Api, Resource
 from flask_migrate import Migrate
 from flask import Flask, make_response, jsonify, request, session
 import requests
 import os
-from flask_bcrypt import Bcrypt
-from faker import Faker
 import tmdbsimple as tmdb
 from models import db, User, Movie, Rating, Comment, MovieList, Log
 
@@ -21,6 +21,9 @@ tmdb.API_KEY = 'c9ec267ab1d062779039d92435621a6b'
 
 # Create a Flask application
 app = Flask(__name__)
+CORS(app, resources={r"/movies/*": {"origins": "http://localhost:3000"}})
+
+CORS(app)
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DATABASE = os.environ.get(
     "DB_URI", f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}")
@@ -35,9 +38,10 @@ migrate = Migrate(app, db)
 
 db.init_app(app)
 
-bcrypt = Bcrypt(app)
 
 api = Api(app)
+
+CORS(app, resources={r"/movies/*": {"origins": "http://localhost:3000"}})
 
 
 # API endpoint URL with API key
@@ -181,7 +185,7 @@ class Logs(Resource):
         logs = [log.to_dict() for log in Log.query.all()]
         return make_response(logs, 200)
 
-api.add_resource(RatingResource, '/logs')
+api.add_resource(Logs, '/logs')
 
 class LogById(Resource):
     def get(self, log_id):
