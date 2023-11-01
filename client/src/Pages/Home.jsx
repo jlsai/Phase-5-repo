@@ -4,7 +4,8 @@ const url = 'http://127.0.0.1:5555'
 
 const api_key = 'c9ec267ab1d062779039d92435621a6b'
 
-function Movies() {
+
+function Homepage() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -17,9 +18,9 @@ function Movies() {
   }, []);
 
   return (
-    <div style={{ color: 'white' }}>
-      <p>List of Movies</p>
-      <ul className="flex space-x-4">
+    <div>
+      <h1 style={{ color: 'white' }}>Home - List of Movies</h1>
+      <ul>
         {movies.map((movie) => (
           <li key={movie.id}>
             <img src={`https://image.tmdb.org/t/p/w92${movie.img_url}`} alt={movie.title} />
@@ -28,6 +29,6 @@ function Movies() {
       </ul>
     </div>
   );
-}
+}  
 
-export default Movies;
+export default Homepage;
