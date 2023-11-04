@@ -5,7 +5,7 @@ import { useUser } from '/src/UserContext';
 import HeadshotBlank from '/src/assets/HeadshotBlank.jpg';
 
 function Header() {
-    const { user, setUser } = useUser(); // Destructure user and setUser here
+    const { user, setUser } = useUser(); 
 
     const handleLogout = () => {
         // Clear user data upon logout
@@ -18,11 +18,11 @@ function Header() {
                 <div className="flex items-center">
                     {user ? (
                         <div className="user ml-4 flex items-center">
-                            <span className="text-lg font-semibold" style={{ color: 'white' }}>{user.username}</span>
+                            <p className="text-lg font-semibold" style={{ color: 'white' }}>{user.username}</p>
                             <img
                                 src={HeadshotBlank}
                                 alt="Profile"
-                                className="icon" // Use rounded-full to make the image rounded
+                                className="icon"
                             />
                         </div>
                     ) : null}

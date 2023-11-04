@@ -1,21 +1,47 @@
-import React from 'react';
-import { useUser } from '/src/UserContext'; // Import the user context or authentication data
+import React, { useEffect, useState } from 'react';
+import { useUser } from '/src/UserContext';
 
-function UserProfile() {
-  const { user } = useUser(); // Retrieve the user data from your context
+const url = 'http://127.0.0.1:5555';
 
-  if (!user) {
-    // Handle the case when there is no user data (user is not logged in)
-    return <div>You are not logged in.</div>;
+function UserProfile({ selectedMovies }) {
+  const { user } = useUser();
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      fetch(`http://127.0.0.1:5555/users/${user.id}`)
+        .then((response) => response.json())
+        .then((userData) => {
+          setCurrentUser(userData);
+          console.log(userData)
+        })
+    }
+  }, [user]);
+
+  if (!currentUser) {
+    return <div>Loading user data...</div>;
   }
 
   return (
     <div>
       <div>
-        <strong>Username:</strong> {user.username}
+        <strong>Username:</strong> {currentUser.username}
       </div>
       <div>
-        <strong>My movies:</strong> {user.email}
+      </div>
+      <div>
+        {selectedMovies ? ( 
+          <ul>
+            {selectedMovies.map((selectedMovie, index) => (
+              <li key={index}>
+                {selectedMovie.name} (ID: {selectedMovie.id}, Rating: {selectedMovie.rating})
+                <img src={selectedMovie.img_url} alt={selectedMovie.name} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No selected movies to display.</p>
+        )}
       </div>
       {/* Add more user information as needed */}
     </div>

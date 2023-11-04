@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background: linear-gradient(to top, #14171C, #363c41);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -24,7 +24,7 @@ a:hover {
 }
 
 body {
-  background-color: #14171C;
+  background: linear-gradient(to top, #14171C, #363c41 250%);
   margin: 0;
   display: flex;
   place-items: center;

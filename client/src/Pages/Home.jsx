@@ -8,14 +8,7 @@ const api_key = 'c9ec267ab1d062779039d92435621a6b'
 function Homepage() {
   const [movies, setMovies] = useState([]);
 
-  useEffect(() => {
-    fetch(url + '/movies')
-      .then((res) => res.json())
-      .then((data) => setMovies(data))
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, []);
+
 
   return (
     <div>
