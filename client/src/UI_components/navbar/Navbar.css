@@ -1,13 +1,30 @@
-.Logo {
-    margin-right: 500px;
-}
-
-.navitem {
-    margin: 20px;
-}
-
-.icon {
-    width: 45px;
-    height: 45px;
-    border-radius: 50px;
-}
+.nav {
+    background-color: #10151a;;
+    color: white;
+    position: inherit;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column; /* Align items vertically */
+    padding: 0.5rem 1rem;
+    z-index: 100;
+  }
+  
+  /* Add any other styling you need for your navigation links and items */
+  .navitem {
+    text-decoration: none;
+    margin: 0.5rem 0; /* Add margin to create spacing between items */
+    color: white; /* Adjust text color as needed */
+  }
+  
+  /* Example for logo image */
+  .icon {
+    width: 40px;
+  }
+  
+  /* Example for user section */
+  .user {
+    display: flex;
+    align-items: center;
+  }

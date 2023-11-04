@@ -11,17 +11,18 @@ from flask_migrate import Migrate
 from flask import Flask, make_response, jsonify, request, session
 import requests
 import os
+import bcrypt
 import tmdbsimple as tmdb
 from models import db, User, Movie, Rating, Comment, MovieList, Log
+from faker import Faker
+fake = Faker()
 
 tmdb.API_KEY = 'c9ec267ab1d062779039d92435621a6b'
 
 
-
-
 # Create a Flask application
 app = Flask(__name__)
-CORS(app, resources={r"/movies/*": {"origins": "http://localhost:3000"}})
+
 
 CORS(app)
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -41,12 +42,26 @@ db.init_app(app)
 
 api = Api(app)
 
+from flask_cors import CORS
+
+
+
+
+
+CORS(app, resources={r"/users/*": {"origins": "http://localhost:3000"}})
 CORS(app, resources={r"/movies/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/logout/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/signup*": {"origins": "http://localhost:3000"}})
+
+
+
 
 
 # API endpoint URL with API key
 api_key = 'c9ec267ab1d062779039d92435621a6b'
 api_url = 'https://api.themoviedb.org/3/discover/movie?api_key=' + api_key  # Replace with the actual API endpoint
+
+
 
 # Define your routes
 @app.route('/')
@@ -81,8 +96,7 @@ class Users(Resource):
     def get(self):
         users = [user.to_dict() for user in User.query.all()]
         return make_response(users, 200)
-
-    
+   
     def post(self):
         try:
             new_user = User(
@@ -127,6 +141,7 @@ class UsersById(Resource):
         db.session.commit()
         return make_response({}, 204)
 api.add_resource(UsersById, '/users/<int:id>')
+
 
 # Create a resource for the Movie model
 class MovieById(Resource):
@@ -197,6 +212,57 @@ class LogById(Resource):
 
 api.add_resource(LogById, '/logs/<int:log_id>')
 
+class Signup(Resource):
+    def post(self):
+        try:
+            new_user = User(
+                username = request.json['username'],
+                _password_hash = request.json['password'],
+                age = request.json['age'],
+                image_url = fake.image_url()
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            session['user_id'] = new_user.id
+            return make_response(new_user.to_dict(), 201)
+        except ValueError:
+            return make_response({"error": "User not created"}, 400)
+    
+    
+
+api.add_resource(Signup, '/signup')
+
+class Login(Resource):
+    def post(self):
+        user = User.query.filter(User.username == request.json['username']).first()
+        password = request.json['password']
+        if user and user.authenticate(password):
+            session['user_id'] = user.id
+            return make_response(user.to_dict(rules=('-_password_hash',)), 201)
+        else:
+            return make_response('error', 400)
+
+api.add_resource(Login, '/login')
+
+class Logout(Resource):
+    def delete(self):
+        session['user_id'] = None
+        return make_response({}, 204)
+
+api.add_resource(Logout, '/logout')
+
+class AutoLogin(Resource):
+    def get(self):
+        if session['user_id']:
+            user = User.query.filter(User.id == session['user_id']).first()
+            if user:
+                return make_response(user.to_dict(rules=('-_password_hash',)), 200)
+            else:
+                return make_response({"errors": "User not found"}, 404)
+        else:
+            return make_response('', 204)
+
+api.add_resource(AutoLogin, '/auto_login')
+
 if __name__ == '__main__':
-    # Run the Flask app on port 5555
     app.run(port=5555, debug=True)

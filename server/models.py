@@ -1,29 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import select
-from flask_migrate import Migrate
-from sqlalchemy import MetaData, Table
 from sqlalchemy.orm import validates
-from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from config import db
-
-convention = {
-    "ix": "ix_%(column_0_label)s",
-    "uq": "uq_%(table_name)s_%(column_0_name)s",
-    "ck": "ck_%(table_name)s_%(constraint_name)s",
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-    "pk": "pk_%(table_name)s"
-}
-
-    
-user_movie_association = db.Table(
-    'user_movie_association',
-    db.Model.metadata,
-    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-    db.Column('movie_id', db.Integer, db.ForeignKey('movies.id'))
-)
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
@@ -34,12 +14,45 @@ class User(db.Model, SerializerMixin):
     age = db.Column(db.Integer)
     image_url = db.Column(db.String)
 
-    ratings = db.relationship('Rating', backref='user_ref', cascade="all, delete-orphan")
-    comments = db.relationship('Comment', backref='user_comments', cascade="all, delete-orphan")
-    lists = db.relationship('MovieList', backref='user_list', cascade="all, delete-orphan")
-    movies = db.relationship('Movie', secondary=user_movie_association, backref='rated_by_users')
+    ratings = db.relationship('Rating', backref='user')
+    
+    def to_dict(self):
+        user_dict = super().to_dict()
+        user_movies = [{'id': rating.movie.id, 'name': rating.movie.title, 'rating': rating.rating, 'img': rating.movie.img_url} for rating in self.ratings]
+        user_dict['movies'] = user_movies
+        return user_dict
 
-    serialize_rules = ('-ratings.user', '-comments.user', '-lists.user', '-movies_rated.users')
+    serialize_rules = ('-ratings.user', '-comments.user', '-lists.user',)
+    
+    @validates('username')
+    def validate_username(self, key, username):
+        if not username:
+            raise ValueError("Username must be present")
+        return username
+    
+    @validates('age')
+    def validate_age(self, key, age):
+        age = int(age)
+        if type(age) is int and age < 16 or age > 100:
+            raise ValueError("Age must be a number of 16 or older")
+        return age
+
+    @hybrid_property
+    def password_hash(self):
+        return self._password_hash
+
+    @password_hash.setter
+    def password_hash(self, password):
+        from app import bcrypt
+        if type(password) is str and len(password) > 6:
+            password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
+            self._password_hash = password_hash.decode('utf-8')
+        else:
+            raise ValueError("Password Invalid")
+    
+    def authenticate(self, password):
+        from app import bcrypt
+        return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
 
 class Movie(db.Model, SerializerMixin):
     __tablename__ = 'movies'
@@ -48,14 +61,13 @@ class Movie(db.Model, SerializerMixin):
     title = db.Column(db.String)
     rating = db.Column(db.Integer)
     img_url = db.Column(db.String)
+    summary = db.Column(db.String)
 
     comments = db.relationship('Comment', backref='movie_comments', cascade="all, delete-orphan")
-    ratings = db.relationship('Rating', primaryjoin='Movie.id == Rating.movie_id', backref='movie_ratings', cascade="all, delete-orphan")
-    users = db.relationship('User', secondary=user_movie_association, backref='movies_user')
+    ratings = db.relationship('Rating', backref='movie', cascade="all, delete-orphan")
     lists = db.relationship('MovieList', backref='movie_lists', cascade="all, delete-orphan")
     
-    serialize_rules = ('-comments.movie', '-ratings.movie', 'users.movie', '-lists.movies')
-
+    serialize_rules = ('-comments.movie', '-ratings.movie', '-ratings.user', '-users.movie', '-lists.movies')
 
 class Rating(db.Model, SerializerMixin):
     __tablename__ = 'ratings'
@@ -65,10 +77,7 @@ class Rating(db.Model, SerializerMixin):
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
-    user = db.relationship('User', backref='ratings_ref')
-    movie = db.relationship('Movie', backref='ratings_movie')
-
-    serialize_rules = ('-user.ratings',)
+    serialize_rules = ('-user.ratings', '-movie.ratings')
 
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
@@ -77,9 +86,6 @@ class Comment(db.Model, SerializerMixin):
     text = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'))
-
-    user = db.relationship('User', backref='comments_user')
-    movie = db.relationship('Movie', backref='comments_movie')
 
     serialize_rules = ('-user.comments', '-movie.comments')
 
@@ -91,9 +97,6 @@ class MovieList(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'))
 
-    user = db.relationship('User', backref='lists_user')
-    movie = db.relationship('Movie', backref='lists_movie')
-
     serialize_rules = ('-user.lists', '-movies.lists')
 
 class Log(db.Model, SerializerMixin):
@@ -102,7 +105,5 @@ class Log(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'))
     rating = db.Column(db.Integer)
-
-    movie = db.relationship('Movie', backref='logs')
 
     serialize_rules = ('-movie.logs')

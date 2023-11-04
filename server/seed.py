@@ -5,6 +5,7 @@ from random import randint, choice as rc
 
 # Remote library imports
 from faker import Faker
+fake = Faker()
 
 # Local imports
 import requests
@@ -35,10 +36,12 @@ def create_movies():
         title = movie_data.get("title")
         vote_average = movie_data.get("vote_average")
         image_url = movie_data.get("poster_path")
+        overview = movie_data.get("overview")
         movie = Movie(
             title=title, 
             rating=vote_average,
-            img_url=image_url
+            img_url=image_url,
+            summary=overview
         )
         db.session.add(movie)    
         print(f"Added movie: {title}")
@@ -51,6 +54,8 @@ def create_movies():
 
     
 def create_users():
+    
+    User.query.delete()
     users = []
    
     for _ in range(5):
