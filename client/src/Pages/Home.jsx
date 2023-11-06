@@ -15,9 +15,9 @@ function Homepage() {
       <h1 style={{ color: 'white' }}>Home - List of Movies</h1>
       <ul>
         {movies.map((movie) => (
-          <li key={movie.id}>
+          <div key={movie.id}>
             <img src={`https://image.tmdb.org/t/p/w92${movie.img_url}`} alt={movie.title} />
-          </li>
+          </div>
         ))}
       </ul>
     </div>

@@ -2,8 +2,14 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import validates
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.ext.associationproxy import association_proxy
 
 from config import db
+
+user_watched_movies = db.Table('user_watched_movies',
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('movie_id', db.Integer, db.ForeignKey('movies.id'))
+)
 
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
@@ -14,6 +20,10 @@ class User(db.Model, SerializerMixin):
     age = db.Column(db.Integer)
     image_url = db.Column(db.String)
 
+    # Add a many-to-many relationship for watched movies
+    watched_movies = db.relationship('Movie', secondary=user_watched_movies, back_populates='watched_by')
+    watched_movies_proxy = association_proxy('watched_movies', 'title') 
+
     ratings = db.relationship('Rating', backref='user')
     
     def to_dict(self):
@@ -23,6 +33,7 @@ class User(db.Model, SerializerMixin):
         return user_dict
 
     serialize_rules = ('-ratings.user', '-comments.user', '-lists.user',)
+    
     
     @validates('username')
     def validate_username(self, key, username):
@@ -66,8 +77,12 @@ class Movie(db.Model, SerializerMixin):
     comments = db.relationship('Comment', backref='movie_comments', cascade="all, delete-orphan")
     ratings = db.relationship('Rating', backref='movie', cascade="all, delete-orphan")
     lists = db.relationship('MovieList', backref='movie_lists', cascade="all, delete-orphan")
-    
-    serialize_rules = ('-comments.movie', '-ratings.movie', '-ratings.user', '-users.movie', '-lists.movies')
+
+    # Add a many-to-many relationship for users who watched the movie
+    watched_by = db.relationship('User', secondary=user_watched_movies, back_populates='watched_movies')
+
+    serialize_rules = ('-comments.movie', '-ratings.movie', '-ratings.user', '-users.movie', '-lists.movies', '-watched_by')
+
 
 class Rating(db.Model, SerializerMixin):
     __tablename__ = 'ratings'

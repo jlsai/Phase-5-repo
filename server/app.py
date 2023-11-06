@@ -5,11 +5,12 @@
 # Remote library imports
 from config import db
 from flask import Flask
+from flask import request
 from flask_cors import CORS
 from flask_restful import Api, Resource
 from flask_migrate import Migrate
 from flask import Flask, make_response, jsonify, request, session
-import requests
+import requests, jsonify
 import os
 import bcrypt
 import tmdbsimple as tmdb
@@ -44,14 +45,15 @@ api = Api(app)
 
 from flask_cors import CORS
 
-
-
-
-
 CORS(app, resources={r"/users/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/users/*": {"origins": "http://localhost:3000", "methods": ['POST', 'DELETE']}})
+CORS(app, resources={r"/users/<int:user_id>/watched/<int:movie_id>": {"origins": "http://localhost:3000", "methods": ['POST', 'DELETE']}})
+CORS(app, resources={r"/users/int:user_id/": {"origins": "http://localhost:3000", "methods": ['POST', 'DELETE']}})
 CORS(app, resources={r"/movies/*": {"origins": "http://localhost:3000"}})
 CORS(app, resources={r"/logout/*": {"origins": "http://localhost:3000"}})
-CORS(app, resources={r"/signup*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/signup/*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/users/<int:user_id>/watched": {"origins": "http://localhost:3000"}})
+
 
 
 
@@ -91,6 +93,9 @@ class Movies(Resource):
         return make_response(movies, 200)
 
 api.add_resource(Movies, "/movies")
+
+
+
 
 class Users(Resource):
     def get(self):
@@ -140,7 +145,65 @@ class UsersById(Resource):
         db.session.delete(user)
         db.session.commit()
         return make_response({}, 204)
+    
+    # def post(self, user_id, movie_id):
+    #     user = User.query.get(user_id)
+    #     if not user:
+    #         return {"error": "User not found"}, 404  # Return a JSON response directly
+        
+    #     movie = Movie.query.get(movie_id)
+    #     if not movie:
+    #         return {"error": "Movie not found"}, 404  # Return a JSON response directly
+
+    #     # Add the movie's ID to the user's "watched_movies" relationship
+    #     user.movies.append(movie)
+    #     db.session.commit()
+
+    #     return {"message": "Movie added to watched list"}, 200  # Return a JSON response directly
+    
+    # def delete(self, user_id, movie_id):
+    #     user = User.query.get(user_id)
+    #     if not user:
+    #         return {"error": "User not found"}, 404  # Return a JSON response directly
+        
+    #     movie = Movie.query.get(movie_id)
+    #     if not movie:
+    #         return {"error": "Movie not found"}, 404  # Return a JSON response directly
+
+    #     # Remove the movie's ID from the user's "watched_movies" relationship
+    #     user.movies.remove(movie)
+    #     db.session.commit()
+
+    #     return {"message": "Movie removed from watched list"}, 200  # Return a JSON response directly
+
 api.add_resource(UsersById, '/users/<int:id>')
+
+class WatchedMovies(Resource):
+    def post(self, user_id, movie_id):
+        user = User.query.get(user_id)
+        movie = Movie.query.get(movie_id)
+
+        if not user or not movie:
+            return jsonify({'error': 'User or movie not found'}), 404
+
+        # Add the movie to the user's watched list
+        user.watched_movies.append(movie)
+        db.session.commit()
+        return jsonify({'message': 'Movie added to watched list'}), 200
+
+    def delete(self, user_id, movie_id):
+        user = User.query.get(user_id)
+        movie = Movie.query.get(movie_id)
+
+        if not user or not movie:
+            return jsonify({'error': 'User or movie not found'}), 404
+
+        # Remove the movie from the user's watched list
+        user.watched_movies.remove(movie)
+        db.session.commit()
+        return jsonify({'message': 'Movie removed from watched list'}), 200
+
+api.add_resource(WatchedMovies, '/users/<int:user_id>/watched/<int:movie_id>')
 
 
 # Create a resource for the Movie model
