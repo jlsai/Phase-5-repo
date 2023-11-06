@@ -32,9 +32,9 @@ function Movies() {
       <p>List of Movies</p>
       <ul className="flex space-x-4">
         {movies.map((movie) => (
-          <li key={movie.id} onClick={() => handleMovieClick(movie)}>
+          <div key={movie.id} onClick={() => handleMovieClick(movie)}>
             <img src={`https://image.tmdb.org/t/p/w92${movie.img_url}`} alt={movie.title} />
-          </li>
+          </div>
         ))}
       </ul>
 
