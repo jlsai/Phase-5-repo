@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useUser } from '/src/UserContext';
 import Rating from '@mui/material/Rating';
+import WatchedButton from '../Movie_actions/WatchedButton';
+
 
 const MovieDetails = () => {
   const { user } = useUser();
@@ -37,6 +39,7 @@ const MovieDetails = () => {
 
     fetchData();
   }, [movieId, user]);
+  
 
   const handleToggleWatched = () => {
     if (isMovieWatched) {
@@ -96,19 +99,22 @@ const MovieDetails = () => {
     return <div>Loading...</div>;
   }
   const value = Math.round(movie.rating * 2) / 2;
+  
 
-  return (
-    <div >
-      <h1>{movie.title}</h1>
-      <img src={`https://image.tmdb.org/t/p/w500${movie.img_url}`} alt={movie.title} />
-      <h1 style={{ color: 'white' }}>{movie.rating}</h1>
-      <Rating name="half-rating-read" defaultValue={value} max={10} precision={0.5} readOnly/>
-      <p style={{ color: 'grey' }}>{movie.summary}</p>
-      <button onClick={handleToggleWatched}>
-        {isMovieWatched ? 'Remove from Watched' : 'Add to Watched'}
-      </button>
-    </div>
-  );
-};
+    return (
+      <div >
+        <h1>{movie.title}</h1>
+        <img src={`https://image.tmdb.org/t/p/w500${movie.img_url}`} alt={movie.title} />
+        <h1 style={{ color: 'white' }}>{movie.rating}</h1>
+        <Rating name="half-rating-read" defaultValue={value} max={10} precision={0.5} readOnly />
+        <p style={{ color: 'grey' }}>{movie.summary}</p>
+        <WatchedButton
+          isMovieWatched={isMovieWatched}
+          onToggleWatched={handleToggleWatched}
+        />
+      </div>
+    );
+  };
+
 
 export default MovieDetails;

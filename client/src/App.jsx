@@ -21,7 +21,7 @@ function App() {
   return (
     <>
       <UserProvider>
-        <Header user={user}/>
+        <Header user={user} className="header"/>
           <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route path='/signup' element={<Signup userToDisplay={setUser}/>}/>

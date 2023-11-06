@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '/src/UserContext';
 import { Link, useNavigate } from 'react-router-dom';
-import './User.css';
+import './User.css'; // Import the CSS file
 
 const url = 'http://127.0.0.1:5555';
 
@@ -41,7 +41,7 @@ function UserProfile() {
         {currentUser.watched_movies && currentUser.watched_movies.length > 0 ? (
           <div className='container'>
             <h2 className="text-2xl font-bold mb-4">Watched Movies:</h2>
-            <div className="movie-cards-container">
+            <div className="movie-cards-container row">
               {currentUser.watched_movies.map((movie) => (
                 <div key={movie.id} className="movie-card" onClick={() => handleMovieClick(movie)}>
                   <img src={`https://image.tmdb.org/t/p/w92${movie.img_url}`} alt={movie.title} className="img" />
