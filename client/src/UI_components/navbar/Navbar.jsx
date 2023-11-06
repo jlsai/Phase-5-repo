@@ -1,11 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
 import './Navbar.css';
 import { useUser } from '/src/UserContext';
-
 import HeadshotBlank from '/src/assets/HeadshotBlank.jpg';
 
 function Header() {
-    const { user, setUser } = useUser(); 
+    const { user, setUser } = useUser();
 
     const handleLogout = () => {
         // Clear user data upon logout
@@ -13,42 +12,42 @@ function Header() {
     };
 
     return (
-        <div className="nav flex items-center p-4" style={{ color: 'white' }}>
-            <nav>
-                <div className="flex items-center">
-                    {user ? (
-                        <div className="user ml-4 flex items-center">
-                            <p className="text-lg font-semibold" style={{ color: 'white' }}>{user.username}</p>
+        <div className="header-container">
+            <nav className="header">
+                <div className="header-logo">
+                    <img src='/src/UI_components/navbar/logoMobile.png' className="header-logo-img" alt="Logo" />
+                    <NavLink to="/" className="header-title">Flatboxd</NavLink>
+                </div>
+                <div className="header-nav">
+                    <ul className="nav-items">
+                        <li className="nav-item">
+                            <NavLink to="/movies" className="nav-link">All films</NavLink>
+                        </li>
+                        {user ? (
+                            <li className="nav-item">
+                                <NavLink to="/user" className="nav-link">Profile</NavLink>
+                            </li>
+                        ) : (
+                            <li className="nav-item">
+                                <NavLink to="/signup" className="nav-link">Sign up</NavLink>
+                            </li>
+                        )}
+                        {user && (
+                            <li className="nav-item">
+                                <a className="nav-link" onClick={handleLogout}>Logout</a>
+                            </li>
+                        )}
+                    </ul>
+                    {user && (
+                        <div className="user-info">
                             <img
                                 src={HeadshotBlank}
                                 alt="Profile"
-                                className="icon"
+                                className="user-icon"
                             />
+                            <p className="user-username">{user.username}</p>
                         </div>
-                    ) : null}
-                </div>
-                <div className="flex items-center"> {/* New flex container */}
-                    <NavLink to="/" className="Title ml-2 text-xl font-bold" style={{ color: 'white' }}>Flatboxd</NavLink>
-
-                    <img src='/src/UI_components/navbar/logoMobile.png' className="Logo ml-4 transform scale-75" alt="Logo" />
-
-                    {user ? ( // Render "Logout" NavLink if the user is logged in, or "Sign up" NavLink if not
-                        <NavLink to="/" className="navitem ml-2 text-lg font-semibold" style={{ color: 'white' }} onClick={handleLogout}>
-                            Logout
-                        </NavLink>
-                    ) : (
-                        <NavLink to="/signup" className="navitem ml-2 text-lg font-semibold" style={{ color: 'white' }}>
-                            Sign up
-                        </NavLink>
                     )}
-
-                    <NavLink to="/movies" className="navitem ml-2 text-lg font-semibold" style={{ color: 'white' }}>
-                        All films
-                    </NavLink>
-
-                    <NavLink to="/user" className="navitem ml-2 text-lg font-semibold" style={{ color: 'white' }}>
-                        Profile
-                    </NavLink>
                 </div>
             </nav>
         </div>

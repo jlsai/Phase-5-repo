@@ -3,12 +3,14 @@ import UserProfile from '/src/Pages/User.jsx';
 import MovieDetails from '/src/Pages/Moviedetails.jsx';
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
+import '/src/Pages/Movies.css'; // Import the CSS file
 
 const url = 'http://127.0.0.1:5555';
 
 function Movies() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null); // New state for selected movie
+  const [search, setSearch] = useState(''); // State for search input
 
   const navigate = useNavigate();
 
@@ -27,18 +29,34 @@ function Movies() {
     navigate(`/movie/${movie.id}`);
   };
 
+  // Filter movies based on search input
+  const filteredMovies = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    <div style={{ color: 'white' }}>
-      <p>List of Movies</p>
-      <ul className="flex space-x-4">
-        {movies.map((movie) => (
-          <div key={movie.id} onClick={() => handleMovieClick(movie)}>
+    <div className="movies-container"> {/* Apply the container style */}
+      <p className="movies-title">List of Movies</p> {/* Apply the title style */}
+      <div className='search'>
+      <input
+        className='searchbar'
+        type="text"
+        placeholder="Search movies"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+      </div>
+      <div className="row">
+        {filteredMovies.map((movie) => (
+          <div
+            key={movie.id}
+            onClick={() => handleMovieClick(movie)}
+            className="movie" // Apply the movie style
+          >
             <img src={`https://image.tmdb.org/t/p/w92${movie.img_url}`} alt={movie.title} />
           </div>
         ))}
-      </ul>
-
-    
+      </div>
     </div>
   );
 }

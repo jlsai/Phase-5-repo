@@ -1,30 +1,89 @@
-.nav {
-    background-color: #10151a;;
-    color: white;
-    position: inherit;
-    top: 0;
-    left: 0;
-    right: 0;
+
+  
+  .header {
     display: flex;
-    flex-direction: column; /* Align items vertically */
-    padding: 0.5rem 1rem;
-    z-index: 100;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 20px;
+    margin: 0 auto;
   }
   
-  /* Add any other styling you need for your navigation links and items */
-  .navitem {
-    text-decoration: none;
-    margin: 0.5rem 0; /* Add margin to create spacing between items */
-    color: white; /* Adjust text color as needed */
-  }
-  
-  /* Example for logo image */
-  .icon {
-    width: 40px;
-  }
-  
-  /* Example for user section */
-  .user {
+  .header-logo {
     display: flex;
     align-items: center;
   }
+  
+  .header-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff; /* Text color */
+    text-decoration: none;
+    margin-right: 20px;
+  }
+
+  /* Navbar.css */
+.header-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff; /* Text color */
+    text-decoration: none;
+    margin-right: 20px; /* Adjust the margin to your preference */
+  }
+  
+  
+  .header-logo-img {
+    width: auto; /* Adjust as needed */
+    height: auto;
+  }
+  
+  .header-nav {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-item {
+    margin-right: 20px;
+  }
+  
+  .nav-link {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff; /* Text color */
+    text-decoration: none;
+    transition: color 0.3s; /* Smooth color transition on hover */
+  
+    /* Hover effect */
+    &:hover {
+      color: #0099ff; /* Change text color on hover */
+    }
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+  }
+  
+  .user-icon {
+    width: 30px; /* Adjust as needed */
+    height: auto;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .user-username {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff; /* Text color */
+  }
+  
