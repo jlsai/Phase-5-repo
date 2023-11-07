@@ -13,7 +13,7 @@ function UserProfile() {
 
   useEffect(() => {
     if (user) {
-      fetch(`http://127.0.0.1:5555/users/${user.id}`)
+      fetch(`/api/users/${user.id}`)
         .then((response) => response.json())
         .then((userData) => {
           setCurrentUser(userData);

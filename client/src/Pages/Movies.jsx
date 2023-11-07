@@ -15,7 +15,7 @@ function Movies() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(url + '/movies')
+    fetch('/api/movies')
       .then((res) => res.json())
       .then((data) => setMovies(data))
       .catch((error) => {

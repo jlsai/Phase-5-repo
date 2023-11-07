@@ -10,7 +10,6 @@ from flask_cors import CORS
 from flask_restful import Api, Resource
 from flask_migrate import Migrate
 from flask import Flask, make_response, jsonify, request, session
-import requests, jsonify
 import os
 import bcrypt
 import tmdbsimple as tmdb
@@ -43,16 +42,16 @@ db.init_app(app)
 
 api = Api(app)
 
-from flask_cors import CORS
+# from flask_cors import CORS
 
-CORS(app, resources={r"/users/*": {"origins": "http://localhost:3000"}})
-CORS(app, resources={r"/users/*": {"origins": "http://localhost:3000", "methods": ['POST', 'DELETE']}})
-CORS(app, resources={r"/users/<int:user_id>/watched/<int:movie_id>": {"origins": "http://localhost:3000", "methods": ['POST', 'DELETE']}})
-CORS(app, resources={r"/users/int:user_id/": {"origins": "http://localhost:3000", "methods": ['POST', 'DELETE']}})
-CORS(app, resources={r"/movies/*": {"origins": "http://localhost:3000"}})
-CORS(app, resources={r"/logout/*": {"origins": "http://localhost:3000"}})
-CORS(app, resources={r"/signup/*": {"origins": "http://localhost:3000"}})
-CORS(app, resources={r"/users/<int:user_id>/watched": {"origins": "http://localhost:3000"}})
+# CORS(app, resources={r"/users/*": {"origins": "http://localhost:3000"}})
+# CORS(app, resources={r"/users/*": {"origins": "http://localhost:3000", "methods": ['POST', 'DELETE']}})
+# # CORS(app, resources={r"/users/<int:user_id>/watched/<int:movie_id>": {"origins": "http://localhost:3000", "methods": ['POST', 'DELETE']}})
+# CORS(app, resources={r"/users/int:user_id/": {"origins": "http://localhost:3000", "methods": ['POST', 'DELETE']}})
+# CORS(app, resources={r"/movies/*": {"origins": "http://localhost:3000"}})
+# CORS(app, resources={r"/logout/*": {"origins": "http://localhost:3000"}})
+# CORS(app, resources={r"/signup/*": {"origins": "http://localhost:3000"}})
+# CORS(app, resources={r"/users/<int:user_id>/watched": {"origins": "http://localhost:3000"}})
 
 
 
@@ -184,24 +183,24 @@ class WatchedMovies(Resource):
         movie = Movie.query.get(movie_id)
 
         if not user or not movie:
-            return jsonify({'error': 'User or movie not found'}), 404
+            return {'error': 'User or movie not found'}, 404
 
         # Add the movie to the user's watched list
         user.watched_movies.append(movie)
         db.session.commit()
-        return jsonify({'message': 'Movie added to watched list'}), 200
+        return {'message': 'Movie added to watched list'}, 200
 
     def delete(self, user_id, movie_id):
         user = User.query.get(user_id)
         movie = Movie.query.get(movie_id)
 
         if not user or not movie:
-            return jsonify({'error': 'User or movie not found'}), 404
+            return {'error': 'User or movie not found'}, 404
 
         # Remove the movie from the user's watched list
         user.watched_movies.remove(movie)
         db.session.commit()
-        return jsonify({'message': 'Movie removed from watched list'}), 200
+        return {'message': 'Movie removed from watched list'}, 200
 
 api.add_resource(WatchedMovies, '/users/<int:user_id>/watched/<int:movie_id>')
 
@@ -245,6 +244,32 @@ class CommentResource(Resource):
             return {'message': 'Comment not found'}, 404
 
 api.add_resource(CommentResource, '/comments/<int:comment_id>')
+
+class CommentListResource(Resource):
+    def get(self, movie_id):
+        movie = Movie.query.get(movie_id)
+        if not movie:
+            return {'message': 'Movie not found'}, 404
+
+        comments = [comment.to_dict() for comment in movie.comments]
+        return make_response(comments, 200)
+
+    def post(self, movie_id):
+        movie = Movie.query.get(movie_id)
+        # Extract comment data from the request
+        data = request.get_json()
+
+        # Create a new comment
+        comment = Comment(text=data['text'], movie_id=movie_id)
+
+        # Add the comment to the database
+        db.session.add(comment)
+        movie.comments.append(comment)
+        db.session.commit()
+
+        return {'message': 'Comment added successfully'}, 201
+
+api.add_resource(CommentListResource, '/movies/<int:movie_id>/comments')
 
 # Create a resource for the MovieList model
 class MovieListResource(Resource):

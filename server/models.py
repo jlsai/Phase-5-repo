@@ -81,7 +81,7 @@ class Movie(db.Model, SerializerMixin):
     # Add a many-to-many relationship for users who watched the movie
     watched_by = db.relationship('User', secondary=user_watched_movies, back_populates='watched_movies')
 
-    serialize_rules = ('-comments.movie', '-ratings.movie', '-ratings.user', '-users.movie', '-lists.movies', '-watched_by')
+    serialize_rules = ('-comments.movie_comments', '-ratings.movie', '-ratings.user', '-users.movie', '-lists.movies', '-watched_by')
 
 
 class Rating(db.Model, SerializerMixin):
