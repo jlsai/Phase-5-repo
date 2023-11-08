@@ -9,6 +9,7 @@ from flask import request
 from flask_cors import CORS
 from flask_restful import Api, Resource
 from flask_migrate import Migrate
+import requests
 from flask import Flask, make_response, jsonify, request, session
 import os
 import bcrypt

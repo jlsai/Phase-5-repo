@@ -1,9 +1,29 @@
 /* MovieDetails.css */
 
 /* Comments Container */
+.movietitle {
+    margin-top: 100px;
+}
+
+.movie-details-container {
+    display: flex;
+    align-items: flex-start; /* Align items at the top */
+  }
+  
+  .movie-details-left {
+    flex: 1; /* Take up all available horizontal space */
+    margin-right: 20px; /* Add spacing between the left and right sections */
+  }
+  
+  .movie-details-right {
+    flex: 1; /* Take up all available horizontal space */
+    margin-top: 300px; 
+  }
+  
+  /* You can add more styling as needed */
+  
 .comments-container {
     margin-top: 20px;
-    border: 1px solid #ccc;
     padding: 10px;
     border-radius: 5px;
   }
@@ -11,20 +31,19 @@
   /* Comment Item */
   .comment-item {
     margin: 10px 0;
-    border: 1px solid #eee;
     padding: 10px;
     border-radius: 5px;
-    background-color: #f9f9f9;
+    background-color: #232429;
   }
   
   .comment-username {
     font-weight: bold;
-    color: #333;
+    color: rgb(211, 211, 211)fff;
   }
   
   .comment-text {
     margin-top: 5px;
-    color: #555;
+    color: #76787c;
   }
   
   /* Add Comment Form */

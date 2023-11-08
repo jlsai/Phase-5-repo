@@ -1,89 +1,79 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: fit-content;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 0;
+  position: fixed;
+  top: 5%;
+  left: 37%;
+  transform: translate(0%, -50%);
+}
 
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    width: 100%;
-    padding: 0 20px;
-    margin: 0 auto;
-  }
-  
-  .header-logo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .header-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff; /* Text color */
-    text-decoration: none;
-    margin-right: 20px;
-  }
+.header-logo {
+  display: flex;
+  align-items: center;
+}
 
-  /* Navbar.css */
 .header-title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff; /* Text color */
-    text-decoration: none;
-    margin-right: 20px; /* Adjust the margin to your preference */
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.header-logo-img {
+  width: auto;
+  height: auto;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+}
+
+.nav-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.nav-item {
+  margin-right: 20px;
+}
+
+.nav-link {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #0099ff;
   }
-  
-  
-  .header-logo-img {
-    width: auto; /* Adjust as needed */
-    height: auto;
-  }
-  
-  .header-nav {
-    display: flex;
-    align-items: center;
-  }
-  
-  .nav-items {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
-  }
-  
-  .nav-item {
-    margin-right: 20px;
-  }
-  
-  .nav-link {
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff; /* Text color */
-    text-decoration: none;
-    transition: color 0.3s; /* Smooth color transition on hover */
-  
-    /* Hover effect */
-    &:hover {
-      color: #0099ff; /* Change text color on hover */
-    }
-  }
-  
-  .user-info {
-    display: flex;
-    align-items: center;
-    margin-left: 20px;
-  }
-  
-  .user-icon {
-    width: 30px; /* Adjust as needed */
-    height: auto;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .user-username {
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff; /* Text color */
-  }
-  
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.user-icon {
+  width: 30px;
+  height: auto;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-username {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}

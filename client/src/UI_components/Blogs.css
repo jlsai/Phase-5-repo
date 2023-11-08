@@ -1,0 +1,63 @@
+/* BlogSection.css */
+.blog-section {
+    padding: 40px;
+    background-color: transparent;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .blog-columns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .blog-box {
+    background-color: #17242e50;
+    border-radius: 5px;
+    width: calc(50% - 10px); /* Two columns with a small gap */
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .blog-image-container {
+    flex: 1;
+  }
+  
+  .blog-image {
+    width: 100%; /* Set a fixed width for the images */
+    max-height: 300px; /* Adjust the maximum height to make the images bigger */
+    object-fit: cover; /* Ensure the image covers the entire container */
+    border-radius: 5px 5px 0 0; /* Add rounded corners to all sides of the image container */
+  }
+  
+  .blog-content-container {
+    flex: 3;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .blog-title {
+    color: azure;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .blog-title:hover {
+    color: rgba(63, 153, 255, 0.418); /* Change the color to blue on hover */
+  }
+  .blog-info {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .blog-content {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
