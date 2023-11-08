@@ -13,9 +13,9 @@ from sqlalchemy import MetaData
 # Instantiate app, set attributes
 app = Flask(
     __name__,
-    static_folder="../client/build",
+    static_folder="../client/dist",
     static_url_path="",
-    template_folder='../client/build',
+    template_folder='../client/dist',
 )
 
 
