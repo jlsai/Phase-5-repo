@@ -10,7 +10,7 @@ from flask_cors import CORS
 from flask_restful import Api, Resource
 from flask_migrate import Migrate
 import requests
-from flask import Flask, make_response, jsonify, request, session
+from flask import Flask, make_response, jsonify, request, session, render_template
 import os
 import bcrypt
 import tmdbsimple as tmdb
@@ -67,8 +67,9 @@ api_url = 'https://api.themoviedb.org/3/discover/movie?api_key=' + api_key  # Re
 
 # Define your routes
 @app.route('/')
-def index():
-    return '<h1>Phase 4 Project Server</h1>'
+@app.route("/<int>:id")
+def index(id=0):
+    return render_template("index.html")
 
 @app.route('/data')
 def get_data():
