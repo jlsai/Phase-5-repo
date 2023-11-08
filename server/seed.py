@@ -11,7 +11,7 @@ fake = Faker()
 import requests
 from app import app, api_url
 from models import db
-from models import User, Movie, Rating, Comment, MovieList, Log
+from models import User, Movie, Rating, Comment, MovieList, Log, user_watched_movies
 
 import requests
 from models import db, Movie
@@ -55,6 +55,8 @@ def create_movies():
 
     
 def create_users():
+    
+    db.session.execute(user_watched_movies.delete())
     
     User.query.delete()
     users = []
