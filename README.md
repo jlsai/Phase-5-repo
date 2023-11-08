@@ -1,6 +1,6 @@
 # Flatboxd - Your Movie Diary
 
-![Flatboxd Logo](src/assets/flatboxd-logo.png)
+![Flatboxd Logo](/home/vboxuser/Development/code/phase-5/Onecmore/Phase-5-repo/client/src/assets/flatboxd.png)
 
 Flatboxd is your go-to application for tracking and exploring your favorite movies. With Flatboxd, you can easily log and rate movies, add personal comments, and discover new films to watch. It's the perfect tool for movie enthusiasts who want to keep a digital record of their cinematic journey.
 
