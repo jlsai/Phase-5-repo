@@ -171,6 +171,7 @@ const MovieDetails = () => {
             precision={0.5}
             readOnly
           />
+          <div className="divider"></div>
           <p className="summary" style={{ color: "grey" }}>{movie.summary}</p>
           <WatchedButton
             isMovieWatched={isMovieWatched}
@@ -180,6 +181,7 @@ const MovieDetails = () => {
       </div>
   
       <div className="comments-container"> 
+      <div className="dividercomments"></div>
         {currentUser && (
           <div className="add-comment-form"> 
             <textarea

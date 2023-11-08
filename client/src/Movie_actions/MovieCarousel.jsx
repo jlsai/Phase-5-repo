@@ -43,7 +43,7 @@ function MovieCarousel() {
 
   return (
     <div className='full'>
-        <p className="Popfilms" style={{ color: '#556678' }}>Popular films</p>
+        <p className="Popfilms" style={{ color: '#556678' }}>The social network for film lovers.</p>
       <div className="movie-container">
       <button className="scroll-button left" onClick={scrollLeft}>
         &lt; {/* Left arrow symbol */}

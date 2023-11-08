@@ -16,7 +16,7 @@ function Homepage() {
         <h1>Share the greats with your friends!</h1>
       </div>
       <div className="relative">
-        <img className="image-container w-full h-auto object-cover absolute inset-0 bg-gradient-to-br from-transparent to-black bg-opacity-50" src='/src/assets/spartan.jpg' alt="Spartan" />
+        <img className="image-container w-full h-auto object-cover absolute inset-0 bg-gradient-to-br from-transparent to-black bg-opacity-50" src='/src/assets/spartan.png' alt="Spartan" />
         <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black bg-opacity-50"></div>
       </div>
       <div>
