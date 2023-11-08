@@ -27,6 +27,10 @@
     border-radius: 10px;
     overflow: hidden;
   }
+  .divider {
+    border-top: 1px solid #353550; /* Grey divider line */
+    margin: 20px 0; /* Adjust margin as needed */
+  }
 
   .search {
     padding: 20px;

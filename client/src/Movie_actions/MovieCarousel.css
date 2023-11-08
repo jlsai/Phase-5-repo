@@ -10,11 +10,11 @@
   .movie-container {
     display: flex;
     margin-left: 380px;
-    width: 30vw; /* Reduce the width to make it narrower */
+    width: 30vw; 
   }
 
   .Popfilms {
-    margin-right: 80px;
+    right: 20px;
   }
   
   .movie {

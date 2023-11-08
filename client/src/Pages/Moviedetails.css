@@ -1,25 +1,36 @@
-/* MovieDetails.css */
 
-/* Comments Container */
 .movietitle {
     margin-top: 100px;
+    font-family: graphic-web-regular;
+    color: azure;
 }
 
 .movie-details-container {
+    font-family: graphic-web-regular;
     display: flex;
     align-items: flex-start; /* Align items at the top */
   }
   
   .movie-details-left {
+    font-family: graphic-web-regular;
     flex: 1; /* Take up all available horizontal space */
     margin-right: 20px; /* Add spacing between the left and right sections */
   }
   
   .movie-details-right {
+    font-family: graphic-web-regular;
     flex: 1; /* Take up all available horizontal space */
     margin-top: 300px; 
   }
-  
+  .divider {
+    border-top: 1px solid #353550; /* Grey divider line */
+    margin: 20px 0; /* Adjust margin as needed */
+  }
+  .dividercomments {
+    padding-bottom: 20px;
+    border-top: 1px solid #353550; /* Grey divider line */
+    margin: 20px 0; /* Adjust margin as needed */
+  }
   /* You can add more styling as needed */
   
 .comments-container {

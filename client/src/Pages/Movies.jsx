@@ -43,7 +43,9 @@ function Movies() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
+      <div className="divider"></div>
       </div>
+      
       <div className="row">
         {filteredMovies.map((movie) => (
           <div
