@@ -24,7 +24,7 @@ def create_movies():
     # Send a GET request to the API to fetch the first 10 movies
     response = requests.get(api_url, headers=headers)
     data = response.json()
-    movies_to_add = data.get("results", [])[:20]  # Get the first 20 movies from the API response
+    movies_to_add = data.get("results", [])[:40]  # Get the first 20 movies from the API response
     
     # Clear the existing movies in the database
     Movie.query.delete()
@@ -48,6 +48,7 @@ def create_movies():
     
     # Commit the changes after adding all movies
     db.session.commit()
+
 
 # Assuming api_url is defined somewhere in your code.
 # Example: api_url = "https://example.com/api/movies"

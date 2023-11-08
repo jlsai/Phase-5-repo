@@ -61,3 +61,16 @@
     line-height: 1.5;
   }
   
+  .read-more {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 14px;
+    color: azure;
+    transition: color 0.3s, text-shadow 0.3s; /* Add transitions for color and text-shadow */
+  }
+  
+  .read-more:hover {
+    color: blue; /* Change the color to blue on hover */
+    text-shadow: 0 0 10px blue; /* Add a text-shadow to make it glow */
+  }
