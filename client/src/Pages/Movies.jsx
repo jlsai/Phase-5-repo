@@ -5,8 +5,6 @@ import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import '/src/Pages/Movies.css'; // Import the CSS file
 
-const url = 'http://127.0.0.1:5555';
-
 function Movies() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null); // New state for selected movie

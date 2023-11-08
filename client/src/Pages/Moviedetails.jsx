@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useUser } from '/src/UserContext';
 import Rating from '@mui/material/Rating';
 import WatchedButton from '../Movie_actions/WatchedButton';
+import "/src/Pages/Moviedetails.css"
 
 
 const MovieDetails = () => {
@@ -153,57 +154,64 @@ const MovieDetails = () => {
 
   return (
     <div>
-      <h1>{movie.title}</h1>
-      <img
-        src={`https://image.tmdb.org/t/p/w500${movie.img_url}`}
-        alt={movie.title}
-      />
-      <h1 style={{ color: "white" }}>{movie.rating}</h1>
-      <Rating
-        name="half-rating-read"
-        defaultValue={value}
-        max={10}
-        precision={0.5}
-        readOnly
-      />
-      <p style={{ color: "grey" }}>{movie.summary}</p>
-      <WatchedButton
-        isMovieWatched={isMovieWatched}
-        onToggleWatched={handleToggleWatched}
-      />
-
-      <h2>Comments</h2>
-
-      {currentUser && (
-        <div>
-          <textarea
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Leave a comment..."
-            style={{
-              backgroundColor: '#6e7f80', // Set the background color to grey-blue
-              padding: '8px',
-            }}
+      <div className="movie-details-container">
+        <div className="movie-details-left">
+          <h1 className='movietitle'>{movie.title}</h1>
+          <img
+            src={`https://image.tmdb.org/t/p/w500${movie.img_url}`}
+            alt={movie.title}
           />
-          <div>
-          <button onClick={handlePostComment}>Post Comment</button>
-          </div>
         </div>
-      )}
-      {comments.length > 0 ? (
-        <div>
-          {comments.map((comment, index) => (
-            <div key={index} style={{ color: 'white' }}>
-              <strong>{comment.username}: </strong>
-              {comment.text}
+        <div className="movie-details-right">
+          <h1 style={{ color: "white" }}>{movie.rating}</h1>
+          <Rating
+            name="half-rating-read"
+            defaultValue={value}
+            max={10}
+            precision={0.5}
+            readOnly
+          />
+          <p className="summary" style={{ color: "grey" }}>{movie.summary}</p>
+          <WatchedButton
+            isMovieWatched={isMovieWatched}
+            onToggleWatched={handleToggleWatched}
+          />
+        </div>
+      </div>
+  
+      <div className="comments-container"> 
+        {currentUser && (
+          <div className="add-comment-form"> 
+            <textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Leave a comment..."
+              className="add-comment-textarea" 
+              style={{ resize: 'none' }}
+            />
+            <div>
+              <button onClick={handlePostComment} className="add-comment-button"> 
+                Post Comment
+              </button>
             </div>
-          ))}
-        </div>
-      ) : (
-        <p>No comments available.</p>
-      )}
+          </div>
+        )}
+        {comments.length > 0 ? (
+          <div>
+            {comments.map((comment, index) => (
+              <div key={index} className="comment-item"> 
+                <strong className="comment-username">{comment.username}: </strong> 
+                <span className="comment-text">{comment.text}</span> 
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>No comments available.</p>
+        )}
+      </div>
     </div>
   );
+  
 };
 
 export default MovieDetails;

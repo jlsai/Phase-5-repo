@@ -1,0 +1,51 @@
+/* Styling for the signup form container */
+.signup-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Styling for the form */
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  /* Styling for form inputs */
+  .signup-form input[type="text"],
+  .signup-form input[type="password"] {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Styling for the Sign Up button */
+  .signup-form button.login-signup-submit {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #0074d9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .signup-form button.login-signup-submit:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Styling for the Login link */
+  .login-signup-toggle {
+    cursor: pointer;
+    color: #0074d9;
+    text-decoration: underline;
+    margin-top: 10px;
+  }
+  
