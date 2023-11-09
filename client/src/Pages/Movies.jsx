@@ -4,6 +4,7 @@ import MovieDetails from '/src/Pages/Moviedetails.jsx';
 import { useParams } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import '/src/Pages/Movies.css'; // Import the CSS file
+import { url } from '/src/Variables.jsx';
 
 function Movies() {
   const [movies, setMovies] = useState([]);
@@ -13,7 +14,7 @@ function Movies() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('https://phase-5-flatboxd-app-2.onrender.com/movies')
+    fetch(url +'/movies')
       .then((res) => res.json())
       .then((data) => setMovies(data))
       .catch((error) => {

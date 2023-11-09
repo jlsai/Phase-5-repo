@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useUser } from '/src/UserContext';
+import { url } from '/src/Variables.jsx';
 
 const CurrUser = () => {
   const { user } = useUser();
@@ -7,7 +8,7 @@ const CurrUser = () => {
 
   useEffect(() => {
     if (user) {
-      fetch(`/api/users/${user.id}`)
+      fetch(url+`/users/${user.id}`)
         .then((response) => response.json())
         .then((userData) => {
           setCurrentUser(userData);

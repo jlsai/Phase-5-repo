@@ -4,6 +4,7 @@ import { useUser } from '/src/UserContext';
 import Rating from '@mui/material/Rating';
 import WatchedButton from '../Movie_actions/WatchedButton';
 import "/src/Pages/Moviedetails.css"
+import { url } from '/src/Variables.jsx';
 
 
 const MovieDetails = () => {
@@ -19,13 +20,13 @@ const MovieDetails = () => {
     const fetchData = async () => {
       try {
         // Fetch movie details
-        const movieResponse = await fetch(`/api/movies/${movieId}`);
+        const movieResponse = await fetch(url+`/movies/${movieId}`);
         const movieData = await movieResponse.json();
         setMovie(movieData);
 
         // Fetch user data
         if (user) {
-          const userDataResponse = await fetch(`/api/users/${user.id}`);
+          const userDataResponse = await fetch(url+`/users/${user.id}`);
           const userData = await userDataResponse.json();
           setCurrentUser(userData);
           // Update isMovieWatched based on the user's watched movies
@@ -52,8 +53,8 @@ const MovieDetails = () => {
 
   const handleAddToWatched = () => {
     if (currentUser) {
-      const posturl = `/api/users/${currentUser.id}/watched/${movieId}`;
-      fetch(posturl, {
+      const posturl = `/users/${currentUser.id}/watched/${movieId}`;
+      fetch(url + posturl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -76,8 +77,8 @@ const MovieDetails = () => {
 
   const handleRemoveFromWatched = () => {
     if (currentUser) {
-      const deleteurl = `/api/users/${currentUser.id}/watched/${movieId}`;
-      fetch(deleteurl, {
+      const deleteurl = `/users/${currentUser.id}/watched/${movieId}`;
+      fetch(url + deleteurl, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -100,7 +101,7 @@ const MovieDetails = () => {
 
   const handlePostComment = async () => {
     if (currentUser) {
-      const postUrl = `/api/movies/${movieId}/comments`;
+      const postUrl = `/movies/${movieId}/comments`;
       const commentData = {
         text: newComment,
         user_id: currentUser.id,
@@ -108,7 +109,7 @@ const MovieDetails = () => {
       };
 
       try {
-        const response = await fetch(postUrl, {
+        const response = await fetch(url + postUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -134,7 +135,7 @@ const MovieDetails = () => {
     const fetchComments = async () => {
       try {
         const commentsResponse = await fetch(
-          `/api/movies/${movieId}/comments`
+          url+`/movies/${movieId}/comments`
         );
         const commentsData = await commentsResponse.json();
         setComments(commentsData); // Make sure commentsData is an array of comment objects
