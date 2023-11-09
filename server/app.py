@@ -45,7 +45,7 @@ db.init_app(app)
 api = Api(app)
 
 # from flask_cors import CORS
-
+CORS(app, resources={r"/*": {"origins": "*"}})
 # CORS(app, resources={r"/users/*": {"origins": "http://localhost:3000"}})
 # CORS(app, resources={r"/users/*": {"origins": "http://localhost:3000", "methods": ['POST', 'DELETE']}})
 # # CORS(app, resources={r"/users/<int:user_id>/watched/<int:movie_id>": {"origins": "http://localhost:3000", "methods": ['POST', 'DELETE']}})
