@@ -65,11 +65,27 @@ api_url = 'https://api.themoviedb.org/3/discover/movie?api_key=' + api_key  # Re
 
 
 
+
+
 # Define your routes
 @app.route('/')
 @app.route("/<int>:id")
 def index(id=0):
     return render_template("index.html")
+
+def application(environ, start_response):
+  if environ['REQUEST_METHOD'] == 'OPTIONS':
+    start_response(
+      '200 OK',
+      [
+        ('Content-Type', 'application/json'),
+        ('Access-Control-Allow-Origin', '*'),
+        ('Access-Control-Allow-Headers', 'Authorization, Content-Type'),
+        ('Access-Control-Allow-Methods', 'POST'),
+      ]
+    )
+    return ''
+
 
 @app.route('/data')
 def get_data():
