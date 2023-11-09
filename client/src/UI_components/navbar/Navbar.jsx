@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import './Navbar.css';
 import { useUser } from '/src/UserContext';
 import HeadshotBlank from '/src/assets/HeadshotBlank.jpg';
+import logomobile from '/src/UI_components/navbar/logoMobile.png'
 
 function Header() {
     const { user, setUser } = useUser();
@@ -15,7 +16,7 @@ function Header() {
         <div className="header-container">
             <nav className="header">
                 <div className="header-logo">
-                    <img src='/src/UI_components/navbar/logoMobile.png' className="header-logo-img" alt="Logo" />
+                    <img src={logomobile} className="header-logo-img" alt="Logo" />
                     <NavLink to="/" className="header-title">Flatboxd</NavLink>
                 </div>
                 <div className="header-nav">
