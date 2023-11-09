@@ -13,7 +13,7 @@ function Movies() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/api/movies')
+    fetch('https://phase-5-flatboxd-app-2.onrender.com/movies')
       .then((res) => res.json())
       .then((data) => setMovies(data))
       .catch((error) => {
