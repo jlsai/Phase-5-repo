@@ -14,7 +14,7 @@ const BlogSection = () => {
       author: 'John Doe',
       date: 'Nov 3, 2023',
       content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in placerat odio. Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod. Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod.',
-      imageUrl: {ken},
+      imageUrl: ken,
     },
     {
       id: 2,
@@ -22,7 +22,7 @@ const BlogSection = () => {
       author: 'Jane Smith',
       date: 'Oct 25, 2023',
       content: 'Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod. Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod. Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod.',
-      imageUrl: {John},
+      imageUrl: John,
     },
     {
       id: 3,
@@ -30,7 +30,7 @@ const BlogSection = () => {
       author: 'Dan Kray',
       date: 'Oct 25, 2023',
       content: 'Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod. Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod.',
-      imageUrl: {talktome},
+      imageUrl: talktome,
     },
     {
       id: 4,
@@ -38,7 +38,7 @@ const BlogSection = () => {
       author: 'Joe York',
       date: 'Oct 25, 2023',
       content: 'Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod.',
-      imageUrl: {robert},
+      imageUrl: robert,
     },
     // Add more blog posts here
   ];
