@@ -4,8 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import './User.css'; // Import the CSS file
 import { url } from '/src/Variables.jsx';
 
-const url = 'http://127.0.0.1:5555';
-
 function UserProfile() {
   const { user } = useUser();
   const [currentUser, setCurrentUser] = useState(null);
