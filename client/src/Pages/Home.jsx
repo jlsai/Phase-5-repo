@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MovieCarousel from '/src/Movie_actions/MovieCarousel.jsx';
 import BlogSection from '/src/UI_components/Blogs.jsx';
+import spartan from '/src/assets/spartan.png'
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import '/src/Pages/Home.css';
 
@@ -14,7 +15,7 @@ function Homepage() {
         <h1>Share the greats with your friends!</h1>
       </div>
       <div className="relative">
-        <img className="image-container w-full h-auto object-cover absolute inset-0 bg-gradient-to-br from-transparent to-black bg-opacity-50" src='/src/assets/spartan.png' alt="Spartan" />
+        <img className="image-container w-full h-auto object-cover absolute inset-0 bg-gradient-to-br from-transparent to-black bg-opacity-50" src={spartan} alt="Spartan" />
         <div className="absolute inset-0 bg-gradient-to-br from-transparent to-black bg-opacity-50"></div>
       </div>
       <div>
