@@ -40,4 +40,4 @@ api = Api(app)
 # Instantiate CORS
 CORS(app)
 
-CORS(app, resources={r"/users/<int:id>*": {"origins": "http://localhost:3000"}})
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
