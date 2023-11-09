@@ -2,6 +2,7 @@ import { useUser } from './UserContext';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "/src/Signup.css"
+import { url } from '/src/Variables.jsx';
 
 const USERNAME_EXISTS_ERROR = 'Username Already Exists';
 const VALIDATION_ERROR = 'Username and Password must be present, and age must be 16 years or older';
@@ -29,7 +30,7 @@ function Signup({userToDisplay}) {
 
   function handleSignupSubmit(e) {
     e.preventDefault()
-    fetch('/api/signup', {
+    fetch(url+'/signup', {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(signupForm)

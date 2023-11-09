@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { url } from '/src/Variables.jsx';
 
 import './MovieCarousel.css'; // Import the CSS file
 
@@ -10,7 +11,7 @@ function MovieCarousel() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/api/movies')
+    fetch(url+'/movies')
       .then((res) => res.json())
       .then((data) => setMovies(data))
       .catch((error) => {

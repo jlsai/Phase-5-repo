@@ -4,8 +4,6 @@ import BlogSection from '/src/UI_components/Blogs.jsx';
 import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 import '/src/Pages/Home.css';
 
-const url = 'http://127.0.0.1:5555';
-
 const api_key = 'c9ec267ab1d062779039d92435621a6b';
 
 function Homepage() {
