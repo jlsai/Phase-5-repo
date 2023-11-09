@@ -32,6 +32,7 @@ DATABASE = os.environ.get(
 
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/": {"origins": "*"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
@@ -63,7 +64,7 @@ api = Api(app)
 api_key = 'c9ec267ab1d062779039d92435621a6b'
 api_url = 'https://api.themoviedb.org/3/discover/movie?api_key=' + api_key  # Replace with the actual API endpoint
 
-CORS(app, resources={r"/*": {"origins": "https://phase-5-flatboxd-app-2.onrender.com/"}})
+
 
 
 
