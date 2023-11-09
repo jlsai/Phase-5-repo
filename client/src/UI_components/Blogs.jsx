@@ -1,5 +1,10 @@
 import React from 'react';
 import "/src/UI_components/Blogs.css"
+import John from '/src/assets/John.jpg';
+import talktome from '/src/assets/talktome.jpg';
+import ken from '/src/assets/ken.jpeg';
+import robert from '/src/assets/robert.jpeg';
+
 
 const BlogSection = () => {
   const blogPosts = [
@@ -9,7 +14,7 @@ const BlogSection = () => {
       author: 'John Doe',
       date: 'Nov 3, 2023',
       content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus in placerat odio. Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod. Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod.',
-      imageUrl: '/src/assets/ken.jpeg',
+      imageUrl: {ken},
     },
     {
       id: 2,
@@ -17,7 +22,7 @@ const BlogSection = () => {
       author: 'Jane Smith',
       date: 'Oct 25, 2023',
       content: 'Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod. Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod. Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod.',
-      imageUrl: '/src/assets/john.jpg',
+      imageUrl: {John},
     },
     {
       id: 3,
@@ -25,7 +30,7 @@ const BlogSection = () => {
       author: 'Dan Kray',
       date: 'Oct 25, 2023',
       content: 'Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod. Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod.',
-      imageUrl: '/src/assets/talktome.jpg',
+      imageUrl: {talktome},
     },
     {
       id: 4,
@@ -33,7 +38,7 @@ const BlogSection = () => {
       author: 'Joe York',
       date: 'Oct 25, 2023',
       content: 'Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod.',
-      imageUrl: '/src/assets/robert.jpeg',
+      imageUrl: {robert},
     },
     // Add more blog posts here
   ];
