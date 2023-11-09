@@ -1,6 +1,6 @@
 import React from 'react';
 import "/src/UI_components/Blogs.css"
-import John from '/src/assets/John.jpg';
+import john from '/src/assets/john.jpg';
 import talktome from '/src/assets/talktome.jpg';
 import ken from '/src/assets/ken.jpeg';
 import robert from '/src/assets/robert.jpeg';
@@ -22,7 +22,7 @@ const BlogSection = () => {
       author: 'Jane Smith',
       date: 'Oct 25, 2023',
       content: 'Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod. Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod. Sed id justo in arcu cursus consectetur a nec ex. In vel metus at leo cursus euismod.',
-      imageUrl: John,
+      imageUrl: john,
     },
     {
       id: 3,
